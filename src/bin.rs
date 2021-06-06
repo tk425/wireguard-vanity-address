@@ -68,7 +68,9 @@ fn print(res: (String, String)) -> Result<(), io::Error> {
         "private {}  public {}",
         &private_b64,
         &public_b64
-    )
+    )?;
+
+    Err(io::Error::new(io::ErrorKind::Other, "[EARLY_EXIT] : OK : key is found"))
 }
 
 #[derive(Debug)]
@@ -162,10 +164,20 @@ fn main() -> Result<(), Box<dyn Error>> {
 
     // 1M trials takes about 10s on my laptop, so let it run for 1000s
     // tk425: increase number of iterations x 100,000; was 20 minutes on sidekick, now ~1300 days
-    (0..100_000_000_000_000i64)
+    let result = (0..100_000_000_000_000i64)
         .into_par_iter()
         .map(|_| trial(&prefix, 0, end))
         .filter_map(|r| r)
-        .try_for_each(print)?;
-    Ok(())
+        .try_for_each(print);
+
+    match result {
+        Ok(ok) => Ok(ok),
+        Err(err) => {
+            if err.to_string().contains("[EARLY_EXIT] : OK") {
+                Ok(())
+            } else {
+                Err(Box::new(err))
+            }
+        }, 
+    }
 }
