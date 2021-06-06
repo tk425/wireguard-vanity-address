@@ -161,7 +161,8 @@ fn main() -> Result<(), Box<dyn Error>> {
     println!("hit Ctrl-C to stop");
 
     // 1M trials takes about 10s on my laptop, so let it run for 1000s
-    (0..100_000_000)
+    // tk425: increase number of iterations x 100,000; was 20 minutes on sidekick, now ~1300 days
+    (0..100_000_000_000_000i64)
         .into_par_iter()
         .map(|_| trial(&prefix, 0, end))
         .filter_map(|r| r)
