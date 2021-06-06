@@ -83,9 +83,9 @@ impl fmt::Display for ParseError {
 fn main() -> Result<(), Box<dyn Error>> {
     let matches = App::new("wireguard-vanity-address")
         .setting(AppSettings::ArgRequiredElseHelp)
-        .version("0.3.1")
+        .version("0.3.1tk425")
         .author("Brian Warner <warner@lothar.com>")
-        .about("finds Wireguard keypairs with a given string prefix")
+        .about("finds Wireguard keypairs with a given string prefix (forked, modified to be case-sensitive)")
         .arg(
             Arg::with_name("RANGE")
                 .long("in")
@@ -98,7 +98,7 @@ fn main() -> Result<(), Box<dyn Error>> {
                 .help("string to find near the start of the pubkey"),
         )
         .get_matches();
-    let prefix = matches.value_of("NAME").unwrap().to_ascii_lowercase();
+    let prefix = matches.value_of("NAME").unwrap();
     let len = prefix.len();
     let end: usize = 44.min(match matches.value_of("RANGE") {
         Some(range) => range.parse()?,
@@ -119,9 +119,10 @@ fn main() -> Result<(), Box<dyn Error>> {
     let mut num = offsets;
     let mut denom = 1u64;
     prefix.chars().for_each(|c| {
-        if c.is_ascii_alphabetic() {
-            num *= 2; // letters can match both uppercase and lowercase
-        }
+        // tk425: hacked to be case-sensitive; removing this
+        // if c.is_ascii_alphabetic() {
+        //     num *= 2; // letters can match both uppercase and lowercase
+        // }
         denom *= 64; // base64
     });
     let trials_per_key = denom / num;
