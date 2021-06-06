@@ -70,7 +70,10 @@ fn print(res: (String, String)) -> Result<(), io::Error> {
         &public_b64
     )?;
 
-    Err(io::Error::new(io::ErrorKind::Other, "[EARLY_EXIT] : OK : key is found"))
+    Err(io::Error::new(
+        io::ErrorKind::Other,
+        "[EARLY_EXIT] : OK : key is found",
+    ))
 }
 
 #[derive(Debug)]
@@ -178,6 +181,6 @@ fn main() -> Result<(), Box<dyn Error>> {
             } else {
                 Err(Box::new(err))
             }
-        }, 
+        }
     }
 }
