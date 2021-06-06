@@ -95,7 +95,7 @@ fn main() -> Result<(), Box<dyn Error>> {
             Arg::with_name("RANGE")
                 .long("in")
                 .takes_value(true)
-                .help("NAME must be found within first RANGE chars of pubkey (default: 10)"),
+                .help("NAME must be found within first RANGE chars of pubkey (default: auto)"),
         )
         .arg(
             Arg::with_name("NAME")
@@ -107,13 +107,7 @@ fn main() -> Result<(), Box<dyn Error>> {
     let len = prefix.len();
     let end: usize = 44.min(match matches.value_of("RANGE") {
         Some(range) => range.parse()?,
-        None => {
-            if len <= 10 {
-                10
-            } else {
-                len + 10
-            }
-        }
+        None => len,
     });
     if end < len {
         return Err(ParseError(format!("range {} is too short for len={}", end, len)).into());
