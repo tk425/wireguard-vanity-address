@@ -116,9 +116,9 @@ fn main() -> Result<(), Box<dyn Error>> {
 
     let offsets: u64 = 44.min((1 + end - len) as u64);
     // todo: this is an approximation, offsets=2 != double the chances
-    let mut num = offsets;
+    let num = offsets;
     let mut denom = 1u64;
-    prefix.chars().for_each(|c| {
+    prefix.chars().for_each(|_c| {
         // tk425: hacked to be case-sensitive; removing this
         // if c.is_ascii_alphabetic() {
         //     num *= 2; // letters can match both uppercase and lowercase
