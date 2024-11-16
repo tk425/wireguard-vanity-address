@@ -1,13 +1,20 @@
 #
-# docker buildx build --platform linux/arm/v7,linux/arm64/v8,linux/amd64 --tag compound45/dev:wireguard-vanity-address .
+# docker buildx build --platform linux/arm64/v8,linux/amd64 --tag compound45/dev:wireguard-vanity-address .
+# (slow and probably not needed, arm32: linux/arm/v7)
 #
 # for a different distro, before --platform:
-#                     --build-arg DISTRO=ubuntu:24.04 
+#                     --build-arg DISTRO=ubuntu:24.10
+#                     --build-arg DISTRO=debian:stable-slim
 # --
+# minimally run:
 # docker run -it --rm compound45/dev:wireguard-vanity-address X/
+# --
+# poke around in ubuntu, bash:
+# docker run -it --rm --entrypoint=bash compound45/dev:wireguard-vanity-address
+# docker run -it --rm --entrypoint=bash compound45/dev:wireguard-vanity-address -c "cat /etc/os-release"
 #
 
-ARG DISTRO=ubuntu:24.04
+ARG DISTRO=ubuntu:rolling
 
 # ---
 # build (Rust, dev environment)
