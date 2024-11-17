@@ -44,12 +44,12 @@ RUN target/release/wireguard-vanity-address "DK/"
 # ---
 # run (binary only)
 # ---
-#FROM ${DISTRO}
+FROM ${DISTRO}
 
-#RUN adduser user
-#USER user
-#WORKDIR /home/user
+RUN adduser -S user
+USER user
+WORKDIR /home/user
 
-#COPY --from=builder /home/user/target/release/wireguard-vanity-address .
+COPY --from=builder /home/user/target/release/wireguard-vanity-address .
 
-#ENTRYPOINT ["/home/user/wireguard-vanity-address"]
+ENTRYPOINT ["/home/user/wireguard-vanity-address"]
