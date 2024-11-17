@@ -9,9 +9,9 @@
 # minimally run:
 # docker run -it --rm compound45/dev:wireguard-vanity-address-dev X/
 # --
-# poke around in ubuntu, bash:
-# docker run -it --rm --entrypoint=bash compound45/dev:wireguard-vanity-address-dev
-# docker run -it --rm --entrypoint=bash compound45/dev:wireguard-vanity-address-dev -c "cat /etc/os-release"
+# poke around in the container via sh: (bash is not installed by default in alpine)
+# docker run -it --rm --entrypoint=sh compound45/dev:wireguard-vanity-address-dev
+# docker run -it --rm --entrypoint=sh compound45/dev:wireguard-vanity-address-dev -c "cat /etc/os-release"
 #
 
 ARG DISTRO=alpine:3.20.3
