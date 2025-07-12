@@ -1,10 +1,21 @@
 #
 # docker buildx build  --platform linux/arm64/v8,linux/amd64 --tag compound45/dev:wireguard-vanity-address -f Dockerfile .
 #
+# one-time host setup notes: (native linux, e.g. Ubuntu 24.04)
+#   https://docs.docker.com/build/building/multi-platform/#cross-compilation
+#
+#   /etc/docker/daemon.json 
+#   { "features": { "containerd-snapshotter": true } }
+#
+#   sudo systemctl restart docker
+#
+#   docker run --privileged --rm tonistiigi/binfmt --install all
+#
 # --
 # minimally run:
 # docker run -it --rm compound45/dev:wireguard-vanity-address X/
 # --
+
 
 ARG DISTRO=alpine:latest
 
